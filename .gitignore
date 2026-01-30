@@ -1,0 +1,23 @@
+# Node / frontend
+node_modules/
+dist/
+.vite/
+
+# .NET / backend
+bin/
+obj/
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
