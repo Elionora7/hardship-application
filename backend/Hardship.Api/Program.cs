@@ -26,6 +26,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// CORS 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // Infrastructure
 builder.Services.AddSingleton<DbConnectionFactory>();
 builder.Services.AddSingleton<HardshipApplicationRepository>();
@@ -46,7 +58,7 @@ using (var scope = app.Services.CreateScope())
 // Global exception middleware
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// Swagger (Development only)
+// Swagger 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -56,8 +68,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Pipeline
+// HTTP pipeline 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend"); 
+
 app.MapControllers();
 
 app.Run();
